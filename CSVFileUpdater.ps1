@@ -11,7 +11,6 @@ function format-CSVFiles {
     
     begin {
 
-        #$Regex          = '(?<LastComma>,)(?<lastdigit>[^,]*)$'
         $Regex          ='(?<LastComma>,)(?<Digits>\d+)$'
         $Results        = @()
         $CSVFiles       = Get-ChildItem -Path $Folder -Filter '*.csv'
@@ -85,3 +84,4 @@ function format-CSVFiles {
 
 $Results = format-CSVFiles $Folder
 $Results | Format-Table -AutoSize
+ 
