@@ -1,9 +1,9 @@
 Import-Module dbatools, PSTimers
 
-$CSVFile        = 'F:\temp\Installments\instalments_dedupe.csv'
-$CSVFileExport  = "F:\temp\Installments\logs\PlansExport_$(get-date -format "yyyy-MM-dd HH-mm-ss").csv"
-$SQLInstance    = 'LONPMSKSQL01'
-$Database       = 'TR4_Live_Masked'
+$CSVFile        = 'P:\DBA\Installments\instalments_dedupe.csv'
+$CSVFileExport  = "P:\DBA\Installments\logs\PlansExport_$(get-date -format "yyyy-MM-dd HH-mm-ss").csv"
+$SQLInstance    = 'WERCOVRDEVSQLD1,2533'
+$Database       = 'TR4_DEV'
 $Bookings       = Import-Csv -Path $CSVFile
 $Results        = @()
 $Count          = 0
@@ -114,11 +114,11 @@ Remove-MyTimer -Name $Timer
 
 $FinalReport = [PSCustomObject]@{
 
-    Date            = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
-    Duration        = $($DurationComplete.Duration.ToString("hh\:mm\:ss"))
-    TotalBookings   = $Bookings.Count
-    NoPlan          = ($Results | Where-Object { $_.Check -eq 'NoPlan' }).Count
-    Plan            = ($Results | Where-Object { $_.Check -eq 'Plan Already Added' }).Count
+    Date                    = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+    Duration                = $($DurationComplete.Duration.ToString("hh\:mm\:ss"))
+    'Bookings - Total'        = $Bookings.Count
+    'Bookings - No Plan'      = ($Results | Where-Object { $_.Check -eq 'NoPlan' }).Count
+    'Bookings - With Plan'    = ($Results | Where-Object { $_.Check -eq 'Plan Already Added' }).Count
     
 }
 
